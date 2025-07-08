@@ -4,9 +4,8 @@ import shell from 'shelljs';
 import fs from "fs";
 
 function build_package() {
-    let cmd = `npx large-package-payload-creator create --deploy-object true 
-        --sender-address ${env.SENDER_ADDRESS} 
-        --contract-address-name ${env.CONTRACT_ADDRESS_NAME} --network ${env.NETWORK} --output-format json`;
+    let cmd0 = `npx large-package-payload-creator create --deploy-object true --output-format json`;
+    let cmd = `${cmd0} --sender-address ${env.SENDER_ADDRESS} --contract-address-name ${env.CONTRACT_ADDRESS_NAME} --network ${env.NETWORK}`;
 
     console.log(cmd);
     let out = shell.exec(cmd, { fatal: true }).stdout;
