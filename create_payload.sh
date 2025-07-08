@@ -1,1 +1,1 @@
-large-package-payload-creator create --deploy-object true --sender-address 0xe9b90e14385d189f53a70c7d3399e3ba30c06a7e0e5cf651f0d464fec8dfe87c --contract-address-name test --network testnet
+large-package-payload-creator create --deploy-object true --sender-address 0xe9b90e14385d189f53a70c7d3399e3ba30c06a7e0e5cf651f0d464fec8dfe87c --contract-address-name test --network testnet --output-format json

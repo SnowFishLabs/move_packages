@@ -34,11 +34,13 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           version: "7.5.0"
+      # - name: Build Move Packages
+      #   run: aptos move build --included-artifacts none --save-metadata
       - name: Build Move Packages
-        run: aptos move build --included-artifacts none --save-metadata
+        run: npx ts-node ghscripts/build.ts
       - name: SyncPackageJson
         run: npx ts-node ghscripts/sync_package_json.ts
       - name: Publish Move Packages
-        run: npx ts-node ghscripts/publish_package.ts
+        run: npx ts-node ghscripts/publish.ts
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
