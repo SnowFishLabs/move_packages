@@ -1,12 +1,10 @@
 {
   "name": "@SnowFishLabs/move_packages",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "files": [
     "bytecode_modules/*.mv",
     "Buildinfo.yaml",
-    "package-metadata.bcs",
-    "payload_*.json",
-    "payload_info.json"
+    "package-metadata.bcs"
   ],
   "repository": {
     "type": "git",

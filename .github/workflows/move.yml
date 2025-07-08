@@ -25,17 +25,11 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - name: Install dependencies
         run: npm ci
-      # - name: Install Aptos Cli
-      #   run: |
-      #     curl -fsSL "https://aptos.dev/scripts/install_cli.sh" | sh
-      #     aptos --version
       - name: Setup Aptos CLI
         uses: WGB5445/aptos-cli-setup@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           version: "7.5.0"
-      # - name: Build Move Packages
-      #   run: aptos move build --included-artifacts none --save-metadata
       - name: Build Move Packages
         run: npx ts-node ghscripts/build.ts
       - name: SyncPackageJson
