@@ -12,7 +12,7 @@ function build_package() {
     let out_json = JSON.parse(out);
 
     if (out_json.status == "success") {
-        let files = out_json.file_names;
+        let files = out_json.file_names as string[];
 
         let build_dir = get_build_dir();
 
@@ -22,7 +22,7 @@ function build_package() {
 
         fs.writeFileSync(payload_info_path, JSON.stringify(files, null, 2));
 
-        files.foreach(function(file: string) {
+        files.forEach(function(file: string) {
             let payload_file_path = `${build_dir}/${file}`;
 
             console.log("copy payload %s", payload_file_path);
