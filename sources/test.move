@@ -1,5 +1,5 @@
 module test::test{
-    fun test() {
+    public entry fun test() {
         // This is a test function
         let x = 5;
         let y = 95;
