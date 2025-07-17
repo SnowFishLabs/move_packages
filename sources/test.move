@@ -1,10 +1,17 @@
 module test::test{
-    public entry fun test() {
-        // This is a test function
-        let x = 5;
-        let y = 95;
-        let z = x + y;
-        assert!(z == 100, 0);
+    use aptos_framework::event;
+
+    #[event]
+    struct TestEvent has drop, store {
+        a: address,
+        b: u64
+    }
+
+    public entry fun test(a: address, b: u64) {
+        event::emit(TestEvent {
+            a,
+            b
+        })
     }
  
     #[test]
