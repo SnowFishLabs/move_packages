@@ -1,6 +1,6 @@
 {
   "name": "@SnowFishLabs/move_packages",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "files": [
     "bytecode_modules/*.mv",
     "Buildinfo.yaml",
