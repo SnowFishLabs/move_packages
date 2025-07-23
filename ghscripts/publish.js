@@ -1,4 +1,5 @@
-var shell = require("shelljs");
+// var shell = require("shelljs");
+var child_process = require("child_process");
 var fs = require("fs");
 
 let cwd = process.cwd();
@@ -11,25 +12,31 @@ function publishPackage() {
 
     console.log(cmd);
 
-    shell.cd(build_dir);
-    shell.exec(cmd, { fatal: true })
+    child_process.execSync(cmd, {
+        cwd: build_dir,
+        encoding: "utf-8",
+        stdio: 'inherit'
+    })
+
+    // shell.cd(build_dir);
+    // shell.exec(cmd, { fatal: true })
 }
 
 function syncPackageJson() {
     console.log("run packages");
     console.log(cwd);
- 
+
     let ghscripts_path = `${cwd}/ghscripts`;
 
     let build_dir = get_build_dir();
 
-    sync_files.forEach(function(name) {
+    sync_files.forEach(function (name) {
         let from = `${ghscripts_path}/${name}`;
         let to = `${build_dir}/${name}`;
 
         console.log(`copy ${from} to ${to}`);
 
-        fs.copyFileSync(from ,to);
+        fs.copyFileSync(from, to);
     });
 }
 
