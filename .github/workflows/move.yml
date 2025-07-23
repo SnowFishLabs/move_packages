@@ -31,9 +31,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           version: "7.5.0"
       - name: Build Move Packages
-        run: npx ts-node ghscripts/build.ts
-      - name: SyncPackageJson
-        run: npx ts-node ghscripts/sync_package_json.ts
+        run: aptos move build --included-artifacts none --save-metadata --named-addresses test=0x11075e54838a4f97e5af4141b08c0e0bccb7b1d57b36757bc62539ee97342008
+      # - name: SyncPackageJson
+      #   run: npx ts-node ghscripts/sync_package_json.ts
       - name: Publish Move Packages
         run: npx ts-node ghscripts/publish.ts
         env:
