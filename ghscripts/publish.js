@@ -1,4 +1,3 @@
-// var shell = require("shelljs");
 var child_process = require("child_process");
 var fs = require("fs");
 
@@ -17,9 +16,6 @@ function publishPackage() {
         encoding: "utf-8",
         stdio: 'inherit'
     })
-
-    // shell.cd(build_dir);
-    // shell.exec(cmd, { fatal: true })
 }
 
 function syncPackageJson() {

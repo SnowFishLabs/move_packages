@@ -1,7 +1,0 @@
-{
-  "name": "move_packages",
-  "version": "0.1.0",
-  "dependencies": {
-    "shelljs": "^0.10.0"
-  }
-}
