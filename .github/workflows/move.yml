@@ -21,7 +21,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          # cache: npm
           registry-url: https://npm.pkg.github.com/
       - name: Install dependencies
         run: npm install
@@ -32,9 +31,8 @@ jobs:
           version: "7.5.0"
       - name: Build Move Packages
         run: aptos move build --included-artifacts none --save-metadata --named-addresses test=0x11075e54838a4f97e5af4141b08c0e0bccb7b1d57b36757bc62539ee97342008
-      # - name: SyncPackageJson
-      #   run: npx ts-node ghscripts/sync_package_json.ts
       - name: Publish Move Packages
-        run: npx ts-node ghscripts/publish.ts
+        # run: npx ts-node ghscripts/publish.ts
+        run: node ghscripts/publish.js
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
