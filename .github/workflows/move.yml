@@ -21,8 +21,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: npm
-          registry-url: https://npm.pkg.github.com/
+          # cache: npm
+          # registry-url: https://npm.pkg.github.com/
       - name: Install dependencies
         run: npm install
       - name: Setup Aptos CLI
