@@ -28,7 +28,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
           repository: SnowFishLabs/aptos_packages
           path: "deps"
-          persistCredentials: true
+          persist-credentials: true
       # - name: Setup SSH
       #   run: |
       #     mkdir -p $HOME/.ssh
