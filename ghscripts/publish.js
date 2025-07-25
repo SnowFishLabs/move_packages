@@ -5,6 +5,7 @@ let cwd = process.cwd();
 let sync_files = ["package.json"];
 
 function publishPackage() {
+    console.log(process.env)
     let build_dir = get_build_dir();
 
     let cmd = `npm publish --registry https://npm.pkg.github.com`;

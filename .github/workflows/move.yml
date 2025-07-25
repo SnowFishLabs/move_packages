@@ -40,3 +40,4 @@ jobs:
         run: node ghscripts/publish.js
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          VERSION: ${{ github.event.inputs.newversion }}
