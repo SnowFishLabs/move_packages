@@ -40,7 +40,6 @@ async function getPackageVersion() {
         auth: process.env.NODE_AUTH_TOKEN
     })
 
-    console.log(process.env)
     let repo = process.env.GITHUB_REPOSITORY;
     let repos = repo.split('/');
 
