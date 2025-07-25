@@ -10,7 +10,7 @@ test = "_"
 test = "0x123"
 
 [dependencies]
-aptos_packages = { git = "git@github.com:fantasyni/aptos_packages.git", rev = "master" }
+aptos_packages = { git = "git@github.com:SnowFishLabs/aptos_packages.git", rev = "master" }
 AptosFramework = { git = "https://github.com/aptos-labs/aptos-framework.git", subdir = "aptos-framework", rev = "mainnet" }
 
 [dev-dependencies]
