@@ -46,6 +46,8 @@ jobs:
           chmod 600 $HOME/.ssh/ssh.key
           export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/ssh.key"
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.email "fantasyni@163.com"
+          git config --global user.name "justin"
           git add .github/workflows/package.json
           git commit -m 'bump version'
           git push origin master
