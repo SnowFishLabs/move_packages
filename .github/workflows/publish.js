@@ -41,8 +41,11 @@ async function getPackageVersion() {
     })
 
     console.log(process.env)
-    let package_name = process.env.GITHUB_REPOSITORY;
-    let org_name = "SnowFishLabs";
+    let repo = process.env.GITHUB_REPOSITORY;
+    let repos = repo.split('/');
+
+    let package_name = repos[1];
+    let org_name = repos[0];
 
     let results = await octokit.request('GET /orgs/{org}/packages/{package_type}/{package_name}/versions', {
         package_type: 'npm',
