@@ -25,10 +25,10 @@ function runInDir(cmd, dir) {
 function bumpNpmVersion() {
     console.log("bumpNpmVersion");
 
-    let workflow_path = `${cwd}`;
+    let workflow_path = `${cwd}/ghscripts`;
 
-    runInDir(`git config --global user.email "fantasyni@163.com"`, workflow_path);
-    runInDir(`git config --global user.name "justin"`, workflow_path);
+    // runInDir(`git config --global user.email "fantasyni@163.com"`, workflow_path);
+    // runInDir(`git config --global user.name "justin"`, workflow_path);
 
     let cmd = `npm version patch`;
 
@@ -44,8 +44,8 @@ function pushNpmVersion() {
 
     runInDir(`git config --global user.email "fantasyni@163.com"`, dir);
     runInDir(`git config --global user.name "justin"`, dir);
-    // runInDir(`git add package.json`, dir);
-    runInDir(`git commit -a -m 'bump version'`, dir);
+    runInDir(`git add ghscripts/package.json`, dir);
+    runInDir(`git commit -m 'bump version'`, dir);
 
     const githubDomain = process.env['INPUT_CUSTOM-GIT-DOMAIN'] || 'github.com'
     let remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.NODE_AUTH_TOKEN}@${githubDomain}/${process.env.GITHUB_REPOSITORY}.git`;
@@ -57,7 +57,7 @@ function syncPackageJson() {
     console.log("run packages");
     console.log(cwd);
 
-    let workflow_path = `${cwd}`;
+    let workflow_path = `${cwd}/ghscripts`;
 
     let build_dir = get_build_dir();
 
