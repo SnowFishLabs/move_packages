@@ -1,4 +1,5 @@
 var child_process = require("child_process");
+var Octokit = require("@octokit/core");
 var fs = require("fs");
 
 let cwd = process.cwd();
@@ -23,7 +24,7 @@ function runInDir(cmd, dir) {
 }
 
 function bumpNpmVersion() {
-    console.log("bumpNpmVersion"); 
+    console.log("bumpNpmVersion");
 
     let workflow_path = `${cwd}/ghscripts`;
 
@@ -34,21 +35,44 @@ function bumpNpmVersion() {
     runInDir(cmd, workflow_path);
 }
 
-function pushNpmVersion() {
-    console.log("pushNpmVersion");
+async function getPackageVersion() {
+    const octokit = new Octokit({
+        auth: process.env.NODE_AUTH_TOKEN
+    })
 
-    let dir = cwd;
+    console.log(process.env)
+    let package_name = process.env.GITHUB_REPOSITORY;
+    let org_name = "SnowFishLabs";
 
-    runInDir(`git config --global user.email "fantasyni@163.com"`, dir);
-    runInDir(`git config --global user.name "justin"`, dir);
-    runInDir(`git add ghscripts/package.json`, dir);
-    runInDir(`git commit -m 'bump version ${getVersion()}'`, dir);
+    let results = await octokit.request('GET /orgs/{org}/packages/{package_type}/{package_name}/versions', {
+        package_type: 'npm',
+        package_name: package_name,
+        org: org_name,
+        per_page: 1,
+    })
 
-    const githubDomain = process.env['INPUT_CUSTOM-GIT-DOMAIN'] || 'github.com'
-    let remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.NODE_AUTH_TOKEN}@${githubDomain}/${process.env.GITHUB_REPOSITORY}.git`;
+    if (results.status == 200 && results.data.length > 0) {
+        return results.data[0].name;
+    }
 
-    runInDir(`git push ${remoteRepo}`, dir);
+    return ""
 }
+
+// function pushNpmVersion() {
+//     console.log("pushNpmVersion");
+
+//     let dir = cwd;
+
+//     runInDir(`git config --global user.email "fantasyni@163.com"`, dir);
+//     runInDir(`git config --global user.name "justin"`, dir);
+//     runInDir(`git add ghscripts/package.json`, dir);
+//     runInDir(`git commit -m 'bump version ${getVersion()}'`, dir);
+
+//     const githubDomain = process.env['INPUT_CUSTOM-GIT-DOMAIN'] || 'github.com'
+//     let remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.NODE_AUTH_TOKEN}@${githubDomain}/${process.env.GITHUB_REPOSITORY}.git`;
+
+//     runInDir(`git push ${remoteRepo}`, dir);
+// }
 
 function syncPackageJson() {
     console.log("run packages");
@@ -68,16 +92,29 @@ function syncPackageJson() {
     });
 }
 
-function getVersion() {
+// function getVersion() {
+//     let package_path = `${cwd}/ghscripts/package.json`;
+//     if (package_path) {
+//         let content = fs.readFileSync(package_path).toString();
+//         let package_json = JSON.parse(content);
+
+//         return package_json.version;
+//     }
+
+//     return "";
+// }
+
+function writeVersion(version) {
     let package_path = `${cwd}/ghscripts/package.json`;
     if (package_path) {
         let content = fs.readFileSync(package_path).toString();
         let package_json = JSON.parse(content);
 
-        return package_json.version;
-    }
+        package_json.version = version;
 
-    return "";
+        console.log(package_json);
+        fs.writeFileSync(package_path, JSON.stringify(package_json, null, 2))
+    }
 }
 
 function get_build_dir() {
@@ -89,11 +126,13 @@ function get_build_dir() {
     return `${build_path}/${build_dir}`;
 }
 
-function main() {
+async function main() {
+    let version = await getPackageVersion();
+    writeVersion(version);
     bumpNpmVersion();
     syncPackageJson();
     publishPackage();
-    pushNpmVersion();
+    // pushNpmVersion();
 }
 
 main();

@@ -27,6 +27,10 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           version: "7.5.0"
+      - name: Setup package.json
+        run: node .github/workflows/setup.js
+      - name: Npm install
+        run: npm install
       - name: Build Move Packages
         run: |
           mkdir -p $HOME/.ssh
@@ -39,12 +43,3 @@ jobs:
         run: node .github/workflows/publish.js
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      # - name: Push package.json
-      #   run: |
-      #     git config --global user.email "fantasyni@163.com"
-      #     git config --global user.name "justin"
-      #     git add .github/workflows/package.json
-      #     git commit -m 'bump version'
-      #     git push origin master
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
