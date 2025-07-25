@@ -23,7 +23,7 @@ function runInDir(cmd, dir) {
 }
 
 function bumpNpmVersion() {
-    console.log("bumpNpmVersion");
+    console.log("bumpNpmVersion"); 
 
     let workflow_path = `${cwd}/ghscripts`;
 
