@@ -27,6 +27,9 @@ function bumpNpmVersion() {
 
     let workflow_path = `${cwd}`;
 
+    runInDir(`git config --global user.email "fantasyni@163.com"`, workflow_path);
+    runInDir(`git config --global user.name "justin"`, workflow_path);
+
     let cmd = `npm version patch`;
 
     console.log(cmd);
@@ -38,7 +41,7 @@ function pushNpmVersion() {
     console.log("pushNpmVersion");
 
     let dir = cwd;
-
+    
     runInDir(`git config --global user.email "fantasyni@163.com"`, dir);
     runInDir(`git config --global user.name "justin"`, dir);
     runInDir(`git add package.json`, dir);
