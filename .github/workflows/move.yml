@@ -22,13 +22,6 @@ jobs:
         with:
           node-version: "20"
           registry-url: https://npm.pkg.github.com/
-      # - name: Checkout dependencies
-      #   uses: actions/checkout@v4
-      #   with:
-      #     ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     repository: SnowFishLabs/aptos_packages
-      #     path: "deps"
-      #     persist-credentials: true
       - name: Setup Aptos CLI
         uses: WGB5445/aptos-cli-setup@v1
         with:
