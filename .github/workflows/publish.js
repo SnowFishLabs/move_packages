@@ -27,9 +27,6 @@ function bumpNpmVersion() {
 
     let workflow_path = `${cwd}/ghscripts`;
 
-    // runInDir(`git config --global user.email "fantasyni@163.com"`, workflow_path);
-    // runInDir(`git config --global user.name "justin"`, workflow_path);
-
     let cmd = `npm version patch`;
 
     console.log(cmd);
