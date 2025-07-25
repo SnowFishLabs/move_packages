@@ -36,7 +36,7 @@ function bumpNpmVersion() {
 }
 
 async function getPackageVersion() {
-    const octokit = new Octokit({
+    const octokit = new Octokit.Octokit({
         auth: process.env.NODE_AUTH_TOKEN
     })
 
