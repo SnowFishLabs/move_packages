@@ -25,7 +25,7 @@ jobs:
       - name: Checkout dependencies
         uses: actions/checkout@v4
         with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
           repository: SnowFishLabs/aptos_packages
           clean: false
       # - name: Setup SSH
