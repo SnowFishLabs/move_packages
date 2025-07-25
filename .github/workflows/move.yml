@@ -28,6 +28,7 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/ssh.key
           chmod 600 $HOME/.ssh/ssh.key
           export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/ssh.key"
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
       - name: Setup Aptos CLI
         uses: WGB5445/aptos-cli-setup@v1
         with:
