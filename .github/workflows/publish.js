@@ -41,11 +41,11 @@ function pushNpmVersion() {
     console.log("pushNpmVersion");
 
     let dir = cwd;
-    
+
     runInDir(`git config --global user.email "fantasyni@163.com"`, dir);
     runInDir(`git config --global user.name "justin"`, dir);
-    runInDir(`git add package.json`, dir);
-    runInDir(`git commit -m 'bump version'`, dir);
+    // runInDir(`git add package.json`, dir);
+    runInDir(`git commit -a -m 'bump version'`, dir);
 
     const githubDomain = process.env['INPUT_CUSTOM-GIT-DOMAIN'] || 'github.com'
     let remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.NODE_AUTH_TOKEN}@${githubDomain}/${process.env.GITHUB_REPOSITORY}.git`;
