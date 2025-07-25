@@ -27,7 +27,7 @@ jobs:
         with:
           ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
           repository: SnowFishLabs/aptos_packages
-          clean: 'false'
+          path: "deps"
       # - name: Setup SSH
       #   run: |
       #     mkdir -p $HOME/.ssh
