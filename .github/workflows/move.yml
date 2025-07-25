@@ -39,3 +39,8 @@ jobs:
         run: node .github/workflows/publish.js
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Push package.json
+        run: |
+          git add .github/workflows/package.json
+          git commit -m 'bump version'
+          git push origin master

@@ -18,16 +18,32 @@ function publishPackage() {
     })
 }
 
+function bumpNpmVersion() {
+    console.log("bumpNpmVersion");
+    
+    let workflow_path = `${cwd}/.github/workflows`;
+    
+    let cmd = `npm version patch`;
+
+    console.log(cmd);
+
+    child_process.execSync(cmd, {
+        cwd: workflow_path,
+        encoding: "utf-8",
+        stdio: 'inherit'
+    })
+}
+
 function syncPackageJson() {
     console.log("run packages");
     console.log(cwd);
 
-    let ghscripts_path = `${cwd}/.github/workflows`;
+    let workflow_path = `${cwd}/.github/workflows`;
 
     let build_dir = get_build_dir();
 
     sync_files.forEach(function (name) {
-        let from = `${ghscripts_path}/${name}`;
+        let from = `${workflow_path}/${name}`;
         let to = `${build_dir}/${name}`;
 
         console.log(`copy ${from} to ${to}`);
@@ -46,6 +62,7 @@ function get_build_dir() {
 }
 
 function main() {
+    bumpNpmVersion();
     syncPackageJson();
     publishPackage();
 }
