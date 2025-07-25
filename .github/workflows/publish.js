@@ -11,8 +11,12 @@ function publishPackage() {
 
     console.log(cmd);
 
+    runInDir(cmd, build_dir);
+}
+
+function runInDir(cmd, dir) {
     child_process.execSync(cmd, {
-        cwd: build_dir,
+        cwd: dir,
         encoding: "utf-8",
         stdio: 'inherit'
     })
@@ -20,18 +24,30 @@ function publishPackage() {
 
 function bumpNpmVersion() {
     console.log("bumpNpmVersion");
-    
+
     let workflow_path = `${cwd}/.github/workflows`;
-    
+
     let cmd = `npm version patch`;
 
     console.log(cmd);
 
-    child_process.execSync(cmd, {
-        cwd: workflow_path,
-        encoding: "utf-8",
-        stdio: 'inherit'
-    })
+    runInDir(cmd, workflow_path);
+}
+
+function pushNpmVersion() {
+    console.log("pushNpmVersion");
+
+    let dir = cwd;
+
+    runInDir(`git config --global user.email "fantasyni@163.com"`, dir);
+    runInDir(`git config --global user.name "justin"`, dir);
+    runInDir(`git add .github/workflows/package.json`, dir);
+    runInDir(`git commit -m 'bump version'`, dir);
+
+    const githubDomain = process.env['INPUT_CUSTOM-GIT-DOMAIN'] || 'github.com'
+    let remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.NODE_AUTH_TOKEN}@${githubDomain}/${process.env.GITHUB_REPOSITORY}.git`;
+
+    runInDir(`git push ${remoteRepo}`, dir);
 }
 
 function syncPackageJson() {
@@ -65,6 +81,7 @@ function main() {
     bumpNpmVersion();
     syncPackageJson();
     publishPackage();
+    pushNpmVersion();
 }
 
 main();
