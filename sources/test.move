@@ -1,6 +1,6 @@
 module test::test{
     use aptos_framework::event;
-    // use aptos_packages::test::{test3 as test5};
+    use aptos_packages::test::{test3 as test5};
 
     #[event]
     struct TestEvent has drop, store {
@@ -25,7 +25,7 @@ module test::test{
     }
 
     public entry fun test3(list: vector<address>) {
-        // test5(list);
+        test5(list);
         
         event::emit(TestEvent3 {
             a: list,

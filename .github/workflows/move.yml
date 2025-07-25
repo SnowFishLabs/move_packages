@@ -15,8 +15,6 @@ jobs:
       packages: write
       contents: read
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -27,6 +25,8 @@ jobs:
         with:
           ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
           repository: SnowFishLabs/aptos_packages
+      - name: Checkout
+        uses: actions/checkout@v4
       # - name: Setup SSH
       #   run: |
       #     mkdir -p $HOME/.ssh
