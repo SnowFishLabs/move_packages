@@ -45,7 +45,7 @@ function pushNpmVersion() {
     runInDir(`git config --global user.email "fantasyni@163.com"`, dir);
     runInDir(`git config --global user.name "justin"`, dir);
     runInDir(`git add ghscripts/package.json`, dir);
-    runInDir(`git commit -m 'bump version'`, dir);
+    runInDir(`git commit -m 'bump version ${getVersion()}'`, dir);
 
     const githubDomain = process.env['INPUT_CUSTOM-GIT-DOMAIN'] || 'github.com'
     let remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.NODE_AUTH_TOKEN}@${githubDomain}/${process.env.GITHUB_REPOSITORY}.git`;
@@ -69,6 +69,18 @@ function syncPackageJson() {
 
         fs.copyFileSync(from, to);
     });
+}
+
+function getVersion() {
+    let package_path = `${cwd}/ghscripts/package.json`;
+    if (package_path) {
+        let content = fs.readFileSync(package_path).toString();
+        let package_json = JSON.parse(content);
+
+        return package_json.version;
+    }
+
+    return "";
 }
 
 function get_build_dir() {
