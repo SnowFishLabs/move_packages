@@ -30,6 +30,8 @@ jobs:
           export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/ssh.key"
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git clone git@github.com:SnowFishLabs/aptos_packages.git
+          ls -al /home/runner/.move
+          ls -al /home/runner/.move/git_github_com_SnowFishLabs_aptos_packages_git_master
       - name: Setup Aptos CLI
         uses: WGB5445/aptos-cli-setup@v1
         with:
