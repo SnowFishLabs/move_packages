@@ -9,9 +9,8 @@ test = "_"
 [dev-addresses]
 test = "0x123"
 
-[dependencies.AptosFramework]
-git = "https://github.com/aptos-labs/aptos-framework.git"
-rev = "mainnet"
-subdir = "aptos-framework"
+[dependencies]
+aptos_packages = { git = "git@github.com:fantasyni/aptos_packages.git", rev = "master" }
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-framework.git", subdir = "aptos-framework", rev = "mainnet" }
 
 [dev-dependencies]

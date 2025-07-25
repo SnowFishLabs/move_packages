@@ -22,8 +22,6 @@ jobs:
         with:
           node-version: "20"
           registry-url: https://npm.pkg.github.com/
-      # - name: Install dependencies
-      #   run: npm install
       - name: Setup Aptos CLI
         uses: WGB5445/aptos-cli-setup@v1
         with:
