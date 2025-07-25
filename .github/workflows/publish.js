@@ -25,7 +25,7 @@ function runInDir(cmd, dir) {
 function bumpNpmVersion() {
     console.log("bumpNpmVersion");
 
-    let workflow_path = `${cwd}/.github/workflows`;
+    let workflow_path = `${cwd}`;
 
     let cmd = `npm version patch`;
 
@@ -41,7 +41,7 @@ function pushNpmVersion() {
 
     runInDir(`git config --global user.email "fantasyni@163.com"`, dir);
     runInDir(`git config --global user.name "justin"`, dir);
-    runInDir(`git add .github/workflows/package.json`, dir);
+    runInDir(`git add package.json`, dir);
     runInDir(`git commit -m 'bump version'`, dir);
 
     const githubDomain = process.env['INPUT_CUSTOM-GIT-DOMAIN'] || 'github.com'
@@ -54,7 +54,7 @@ function syncPackageJson() {
     console.log("run packages");
     console.log(cwd);
 
-    let workflow_path = `${cwd}/.github/workflows`;
+    let workflow_path = `${cwd}`;
 
     let build_dir = get_build_dir();
 
