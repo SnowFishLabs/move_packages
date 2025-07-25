@@ -22,13 +22,18 @@ jobs:
         with:
           node-version: "20"
           registry-url: https://npm.pkg.github.com/
-      - name: Setup SSH
-        run: |
-          mkdir -p $HOME/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/ssh.key
-          chmod 600 $HOME/.ssh/ssh.key
-          export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/ssh.key"
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - name: Checkout dependencies
+        uses: actions/checkout@v4
+        with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          repository: SnowFishLabs/aptos_packages
+      # - name: Setup SSH
+      #   run: |
+      #     mkdir -p $HOME/.ssh
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/ssh.key
+      #     chmod 600 $HOME/.ssh/ssh.key
+      #     export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/ssh.key"
+      #     ssh-keyscan github.com >> ~/.ssh/known_hosts
       - name: Setup Aptos CLI
         uses: WGB5445/aptos-cli-setup@v1
         with:
