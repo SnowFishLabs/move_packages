@@ -1,0 +1,7 @@
+{
+  "name": "move_packages",
+  "version": "1.0.0",
+  "dependencies": {
+    "@octokit/core": "^7.0.3"
+  }
+}

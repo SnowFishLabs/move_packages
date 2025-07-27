@@ -60,22 +60,6 @@ async function getPackageVersion() {
     return ""
 }
 
-// function pushNpmVersion() {
-//     console.log("pushNpmVersion");
-
-//     let dir = cwd;
-
-//     runInDir(`git config --global user.email "fantasyni@163.com"`, dir);
-//     runInDir(`git config --global user.name "justin"`, dir);
-//     runInDir(`git add ghscripts/package.json`, dir);
-//     runInDir(`git commit -m 'bump version ${getVersion()}'`, dir);
-
-//     const githubDomain = process.env['INPUT_CUSTOM-GIT-DOMAIN'] || 'github.com'
-//     let remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.NODE_AUTH_TOKEN}@${githubDomain}/${process.env.GITHUB_REPOSITORY}.git`;
-
-//     runInDir(`git push ${remoteRepo}`, dir);
-// }
-
 function syncPackageJson() {
     console.log("run packages");
     console.log(cwd);
@@ -94,20 +78,15 @@ function syncPackageJson() {
     });
 }
 
-// function getVersion() {
-//     let package_path = `${cwd}/ghscripts/package.json`;
-//     if (package_path) {
-//         let content = fs.readFileSync(package_path).toString();
-//         let package_json = JSON.parse(content);
-
-//         return package_json.version;
-//     }
-
-//     return "";
-// }
-
 function writeVersion(version) {
-    let package_path = `${cwd}/ghscripts/package.json`;
+    let gh_scripts = `${cwd}/ghscripts`;
+
+    if (!fs.existsSync(gh_scripts)) {
+        fs.mkdirSync(gh_scripts);
+    }
+
+    let package_path = `${cwd}/.github/workflows/package.json`;
+    let gh_package_path = `${cwd}/ghscripts/package.json`;
     if (package_path) {
         let content = fs.readFileSync(package_path).toString();
         let package_json = JSON.parse(content);
@@ -115,7 +94,7 @@ function writeVersion(version) {
         package_json.version = version;
 
         console.log(package_json);
-        fs.writeFileSync(package_path, JSON.stringify(package_json, null, 2))
+        fs.writeFileSync(gh_package_path, JSON.stringify(package_json, null, 2))
     }
 }
 
@@ -134,7 +113,6 @@ async function main() {
     bumpNpmVersion();
     syncPackageJson();
     publishPackage();
-    // pushNpmVersion();
 }
 
 main();
