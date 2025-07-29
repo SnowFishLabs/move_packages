@@ -90,10 +90,7 @@ function writeVersion(version) {
         fs.mkdirSync(gh_scripts);
     }
 
-    // let package_path = `${cwd}/.github/workflows/package.json`;
     let gh_package_path = `${cwd}/ghscripts/package.json`;
-    // if (package_path) {
-    // let content = fs.readFileSync(package_path).toString();
     let repo = process.env.GITHUB_REPOSITORY;
     let package_json = {
         "name": `@${repo}`,
@@ -116,7 +113,6 @@ function writeVersion(version) {
 
     console.log(package_json);
     fs.writeFileSync(gh_package_path, JSON.stringify(package_json, null, 2))
-    // }
 }
 
 function get_build_dir() {
