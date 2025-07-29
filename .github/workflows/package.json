@@ -4,7 +4,8 @@
   "files": [
     "bytecode_modules/*.mv",
     "Buildinfo.yaml",
-    "package-metadata.bcs"
+    "package-metadata.bcs",
+    "commit.json"
   ],
   "repository": {
     "type": "git",

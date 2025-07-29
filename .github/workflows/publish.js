@@ -3,7 +3,7 @@ var Octokit = require("@octokit/core");
 var fs = require("fs");
 
 let cwd = process.cwd();
-let sync_files = ["package.json"];
+let sync_files = ["package.json", "commit.json"];
 
 function publishPackage() {
     let build_dir = get_build_dir();
@@ -36,28 +36,32 @@ function bumpNpmVersion() {
 }
 
 async function getPackageVersion() {
-    const octokit = new Octokit.Octokit({
-        auth: process.env.NODE_AUTH_TOKEN
-    })
+    try {
+        const octokit = new Octokit.Octokit({
+            auth: process.env.NODE_AUTH_TOKEN
+        })
 
-    let repo = process.env.GITHUB_REPOSITORY;
-    let repos = repo.split('/');
+        let repo = process.env.GITHUB_REPOSITORY;
+        let repos = repo.split('/');
 
-    let package_name = repos[1];
-    let org_name = repos[0];
+        let package_name = repos[1];
+        let org_name = repos[0];
 
-    let results = await octokit.request('GET /orgs/{org}/packages/{package_type}/{package_name}/versions', {
-        package_type: 'npm',
-        package_name: package_name,
-        org: org_name,
-        per_page: 1,
-    })
+        let results = await octokit.request('GET /orgs/{org}/packages/{package_type}/{package_name}/versions', {
+            package_type: 'npm',
+            package_name: package_name,
+            org: org_name,
+            per_page: 1,
+        })
 
-    if (results.status == 200 && results.data.length > 0) {
-        return results.data[0].name;
+        if (results.status == 200 && results.data.length > 0) {
+            return results.data[0].name;
+        }
+
+        return ""
+    } catch (e) {
+        return ""
     }
-
-    return ""
 }
 
 function syncPackageJson() {
@@ -91,7 +95,9 @@ function writeVersion(version) {
         let content = fs.readFileSync(package_path).toString();
         let package_json = JSON.parse(content);
 
-        package_json.version = version;
+        if (version) {
+            package_json.version = version;
+        }
 
         console.log(package_json);
         fs.writeFileSync(gh_package_path, JSON.stringify(package_json, null, 2))
@@ -107,9 +113,52 @@ function get_build_dir() {
     return `${build_path}/${build_dir}`;
 }
 
+async function write_last_commit(
+    github_org,
+    github_package,
+    github_token,
+) {
+    try {
+        const octokit = new Octokit({
+            auth: github_token
+        })
+
+        let package_name = github_package;
+        let org_name = github_org;
+
+        let results = await octokit.request('GET /repos/{owner}/{repo}/commits', {
+            owner: org_name,
+            repo: package_name,
+            per_page: 1,
+            headers: {
+                'X-GitHub-Api-Version': '2022-11-28'
+            }
+        })
+
+        if (results.status == 200 && results.data.length > 0) {
+            let commit_path = `${cwd}/ghscripts/commit.json`;
+
+            let commit = results.data[0];
+
+            let commit_json = {
+                sha: commit.sha,
+                commit: commit.commit
+            }
+
+            console.log("write_last_commit")
+            console.log(commit_json);
+            fs.writeFileSync(commit_path, JSON.stringify(commit_json, null, 2))
+        }
+    } catch (e) {
+        console.error(e);
+    }
+
+}
+
 async function main() {
     let version = await getPackageVersion();
     writeVersion(version);
+    await write_last_commit();
     bumpNpmVersion();
     syncPackageJson();
     publishPackage();
