@@ -113,18 +113,17 @@ function get_build_dir() {
     return `${build_path}/${build_dir}`;
 }
 
-async function write_last_commit(
-    github_org,
-    github_package,
-    github_token,
-) {
+async function write_last_commit() {
     try {
         const octokit = new Octokit.Octokit({
-            auth: github_token
+            auth: process.env.NODE_AUTH_TOKEN
         })
 
-        let package_name = github_package;
-        let org_name = github_org;
+        let repo = process.env.GITHUB_REPOSITORY;
+        let repos = repo.split('/');
+
+        let package_name = repos[1];
+        let org_name = repos[0];
 
         let results = await octokit.request('GET /repos/{owner}/{repo}/commits', {
             owner: org_name,
