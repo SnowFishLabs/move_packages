@@ -37,7 +37,7 @@ function bumpNpmVersion() {
 async function getPackageVersion() {
     try {
         var Octokit = require("@octokit/core");
-        
+
         const octokit = new Octokit.Octokit({
             auth: process.env.NODE_AUTH_TOKEN
         })
@@ -90,11 +90,25 @@ function writeVersion(version) {
         fs.mkdirSync(gh_scripts);
     }
 
-    let package_path = `${cwd}/.github/workflows/package.json`;
+    // let package_path = `${cwd}/.github/workflows/package.json`;
     let gh_package_path = `${cwd}/ghscripts/package.json`;
     if (package_path) {
-        let content = fs.readFileSync(package_path).toString();
-        let package_json = JSON.parse(content);
+        // let content = fs.readFileSync(package_path).toString();
+        let repo = process.env.GITHUB_REPOSITORY;
+        let package_json = {
+            "name": `@${repo}`,
+            "version": "1.0.0",
+            "files": [
+                "bytecode_modules/*.mv",
+                "Buildinfo.yaml",
+                "package-metadata.bcs",
+                "commit.json"
+            ],
+            "repository": {
+                "type": "git",
+                "url": `git+https://github.com/${repo}.git`
+            }
+        }
 
         if (version) {
             package_json.version = version;
