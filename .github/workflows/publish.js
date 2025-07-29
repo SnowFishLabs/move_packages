@@ -185,6 +185,7 @@ function setup() {
 }
 
 async function main() {
+    console.log(process.env)
     setup();
     let version = await getPackageVersion();
     writeVersion(version);
