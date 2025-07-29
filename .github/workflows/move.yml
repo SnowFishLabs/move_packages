@@ -35,7 +35,11 @@ jobs:
           export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/ssh.key"
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           aptos move build --included-artifacts none --save-metadata --named-addresses test=0x11075e54838a4f97e5af4141b08c0e0bccb7b1d57b36757bc62539ee97342008
-      - name: Publish Move Packages
-        run: node .github/workflows/publish.js
+      - name: Setup Move Packages
+        uses: fantasyni/setup_move@move
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      # - name: Publish Move Packages
+      #   run: node .github/workflows/publish.js
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
