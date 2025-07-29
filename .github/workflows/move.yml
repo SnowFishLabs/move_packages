@@ -36,7 +36,7 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           aptos move build --included-artifacts none --save-metadata --named-addresses test=0x11075e54838a4f97e5af4141b08c0e0bccb7b1d57b36757bc62539ee97342008
       - name: Setup Move Packages
-        uses: fantasyni/setup_move@v1.0.1
+        uses: fantasyni/setup_move@v1
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       # - name: Publish Move Packages
