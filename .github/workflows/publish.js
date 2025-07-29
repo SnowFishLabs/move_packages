@@ -119,7 +119,7 @@ async function write_last_commit(
     github_token,
 ) {
     try {
-        const octokit = new Octokit({
+        const octokit = new Octokit.Octokit({
             auth: github_token
         })
 
