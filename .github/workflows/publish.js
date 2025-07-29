@@ -1,5 +1,4 @@
 var child_process = require("child_process");
-var Octokit = require("@octokit/core");
 var fs = require("fs");
 
 let cwd = process.cwd();
@@ -37,6 +36,8 @@ function bumpNpmVersion() {
 
 async function getPackageVersion() {
     try {
+        var Octokit = require("@octokit/core");
+        
         const octokit = new Octokit.Octokit({
             auth: process.env.NODE_AUTH_TOKEN
         })
@@ -115,6 +116,8 @@ function get_build_dir() {
 
 async function write_last_commit() {
     try {
+        var Octokit = require("@octokit/core");
+
         const octokit = new Octokit.Octokit({
             auth: process.env.NODE_AUTH_TOKEN
         })
