@@ -161,6 +161,6 @@ async function main() {
     bumpNpmVersion();
     syncPackageJson();
     publishPackage();
-}
+} 
 
 main();
