@@ -56,4 +56,5 @@ jobs:
         with:
           user-id: ${{secrets.NOTIFICATION_USER_ID}}
           api-key: ${{secrets.NOTIFICATION_API_KEY}}
+          content: "失败"
           failure: true
