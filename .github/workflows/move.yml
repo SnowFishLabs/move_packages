@@ -27,20 +27,20 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           version: "7.5.0"
-      - name: Build Move Packages
-        run: |
-          mkdir -p $HOME/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/ssh.key
-          chmod 600 $HOME/.ssh/ssh.key
-          export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/ssh.key"
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          aptos move build --included-artifacts none --save-metadata --named-addresses test=0x11075e54838a4f97e5af4141b08c0e0bccb7b1d57b36757bc62539ee97342008
+      # - name: Build Move Packages
+      #   run: |
+      #     mkdir -p $HOME/.ssh
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/ssh.key
+      #     chmod 600 $HOME/.ssh/ssh.key
+      #     export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/ssh.key"
+      #     ssh-keyscan github.com >> ~/.ssh/known_hosts
+      #     aptos move build --included-artifacts none --save-metadata --named-addresses test=0x11075e54838a4f97e5af4141b08c0e0bccb7b1d57b36757bc62539ee97342008
       # - name: Setup Move Packages
       #   uses: fantasyni/setup_move@v1
       #   env:
       #     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Publish Move Packages
-        run: node .github/workflows/publish.js
+        run: node .github/workflows/publish2.js
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Setup Notification
@@ -49,3 +49,10 @@ jobs:
           user-id: ${{secrets.NOTIFICATION_USER_ID}}
           api-key: ${{secrets.NOTIFICATION_API_KEY}}
           content: "成功"
+      - name: failure Notification
+        if: ${{ failure() }}
+        uses: fantasyni/setup_notification@v1
+        with:
+          user-id: ${{secrets.NOTIFICATION_USER_ID}}
+          api-key: ${{secrets.NOTIFICATION_API_KEY}}
+          content: "失败"
