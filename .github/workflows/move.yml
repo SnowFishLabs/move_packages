@@ -46,4 +46,6 @@ jobs:
       - name: Setup Notification
         uses: fantasyni/setup_notification@v1
         with:
+          user-id: ${{secrets.NOTIFICATION_USER_ID}}
+          api-key: ${{secrets.NOTIFICATION_API_KEY}}
           content: "成功"
