@@ -43,3 +43,7 @@ jobs:
         run: node .github/workflows/publish.js
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Setup Notification
+        uses: fantasyni/setup_notification@v1
+        with:
+          content: "成功"
