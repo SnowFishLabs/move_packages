@@ -192,7 +192,7 @@ function setup() {
 
 function runGh() {
     let output = child_process.execSync(`gh run list --limit 1`, {
-        cwd: dir,
+        cwd: cwd,
         encoding: "utf-8",
     })
 
