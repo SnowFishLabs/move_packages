@@ -50,9 +50,9 @@ jobs:
           # gh run list --limit 1 --json displayTitle
           # gh run list --limit 1 --json databaseId
           # gh run list --limit 1 --json workflowDatabaseId
-          echo ${{ github.event_name }}
-          echo ${{ github.job }}
-          echo ${{ github.action }}
+          echo ${{ github.run_attempt }}
+          echo ${{ github.run_number }}
+          echo ${{ github.run_id }}
         env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Publish Move Packages
