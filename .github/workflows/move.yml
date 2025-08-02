@@ -45,18 +45,16 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: Setup Notification
-        uses: fantasyni/setup_notification@v1
-        with:
-          user-id: "lark-test"
-          api-key: ${{secrets.NOTIFICATION_API_KEY}}
-          run-id: ${{ github.run_id }}
-          content: "成功"
+      # - name: Setup Notification
+      #   uses: fantasyni/setup_notification@v1
+      #   with:
+      #     user-id: "lark-test"
+      #     api-key: ${{secrets.NOTIFICATION_API_KEY}}
+      #     content: "成功"
       - name: failure Notification
-        if: ${{ failure() }}
+        if: ${{ failure() || success() }}
         uses: fantasyni/setup_notification@v1
         with:
           user-id: "lark-test"
           api-key: ${{secrets.NOTIFICATION_API_KEY}}
-          run-id: ${{ github.run_id }}
-          content: "失败"
+          content: ${{ job.status }}
