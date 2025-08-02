@@ -41,7 +41,9 @@ jobs:
       #   env:
       #     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Run gh
-        run: gh run list --limit 1
+        run: |
+          gh run list --limit 1
+          gh run list --limit 1 --json number
         env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Publish Move Packages
