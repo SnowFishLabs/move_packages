@@ -15,7 +15,7 @@ function publishPackage() {
 }
 
 function runInDir(cmd, dir) {
-    child_process.execSync(cmd, {
+    return child_process.execSync(cmd, {
         cwd: dir,
         encoding: "utf-8",
         stdio: 'inherit'
@@ -192,12 +192,21 @@ function setup() {
 
 function runGh() {
     console.log("runGh")
-    let output = child_process.execSync(`gh run list --limit 1`, {
-        cwd: cwd,
-        encoding: "utf-8",
-    })
+    let output = runInDir(`gh run list --limit 1 --json databaseId`, cwd);
 
-    console.log(output);
+    // let output = child_process.execSync(`gh run list --limit 1 --json databaseId`, {
+    //     cwd: cwd,
+    //     encoding: "utf-8",
+    // })
+
+    let data = JSON.parse(output);
+
+    console.log(data);
+
+    let jobid = data[0].databaseId;
+    let cmd = `gh run view ${jobid} --log`
+
+    runInDir(cmd, cwd);
 }
 
 async function main() {
