@@ -60,7 +60,7 @@ jobs:
         if: ${{ failure() }}
         uses: fantasyni/setup_notification@v1
         with:
-          user-id: ${{secrets.NOTIFICATION_USER_ID}}
+          user-id: "lark-test"
           api-key: ${{secrets.NOTIFICATION_API_KEY}}
           run-id: ${{ github.run_id }}
-          content: ${{ steps.id.outputs.stdout }}
+          content: "失败"
