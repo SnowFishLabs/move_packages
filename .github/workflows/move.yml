@@ -35,7 +35,7 @@ jobs:
           chmod 600 $HOME/.ssh/ssh.key
           export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/ssh.key"
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-          aptos move build --included-artifacts none --save-metadata --named-addresses test=0x11075e54838a4f97e5af4141b08c0e0bccb7b1d57b36757bc62539ee97342008
+          # aptos move build --included-artifacts none --save-metadata --named-addresses test=0x11075e54838a4f97e5af4141b08c0e0bccb7b1d57b36757bc62539ee97342008
       # - name: Setup Move Packages
       #   uses: fantasyni/setup_move@v1
       #   env:
@@ -43,7 +43,7 @@ jobs:
       - name: Run gh
         run: |
           gh run list --limit 1
-          gh run list --limit 1 --json number
+          gh run list --limit 1 --json attempt, conclusion, createdAt, databaseId, displayTitle, event, headBranch, headSha, name, number, startedAt, status, updatedAt, url, workflowDatabaseId, workflowName
         env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Publish Move Packages
