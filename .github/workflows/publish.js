@@ -190,8 +190,18 @@ function setup() {
     runInDir(`npm install`, cwd);
 }
 
+function runGh() {
+    let output = child_process.execSync(`gh run list --limit 1`, {
+        cwd: dir,
+        encoding: "utf-8",
+    })
+
+    console.log(output);
+}
+
 async function main() {
-    console.log(process.env)
+    runGh();
+    // console.log(process.env)
     setup();
     let version = await getPackageVersion();
     writeVersion(version);
