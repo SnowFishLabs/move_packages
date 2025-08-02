@@ -22,6 +22,13 @@ function runInDir(cmd, dir) {
     })
 }
 
+function runIn(cmd, dir) {
+    return child_process.execSync(cmd, {
+        cwd: dir,
+        encoding: "utf-8",
+    })
+}
+
 function bumpNpmVersion() {
     console.log("bumpNpmVersion");
 
@@ -192,13 +199,14 @@ function setup() {
 
 function runGh() {
     console.log("runGh")
-    let output = runInDir(`gh run list --limit 1 --json databaseId`, cwd);
+    let output = runIn(`gh run list --limit 1 --json databaseId`, cwd);
 
     // let output = child_process.execSync(`gh run list --limit 1 --json databaseId`, {
     //     cwd: cwd,
     //     encoding: "utf-8",
     // })
 
+    console.log(output)
     let data = JSON.parse(output);
 
     console.log(data);
@@ -206,7 +214,7 @@ function runGh() {
     let jobid = data[0].databaseId;
     let cmd = `gh run view ${jobid} --log`
 
-    runInDir(cmd, cwd);
+    runIn(cmd, cwd);
 }
 
 async function main() {
