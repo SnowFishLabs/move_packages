@@ -200,7 +200,7 @@ function runGh() {
 }
 
 async function main() {
-    runGh();
+    // runGh();
     // console.log(process.env)
     setup();
     let version = await getPackageVersion();

@@ -39,6 +39,10 @@ jobs:
       #   uses: fantasyni/setup_move@v1
       #   env:
       #     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Run gh
+        run: gh run list --limit 1
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Publish Move Packages
         run: node .github/workflows/publish.js
         env:
