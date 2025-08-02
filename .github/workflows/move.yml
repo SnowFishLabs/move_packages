@@ -42,14 +42,17 @@ jobs:
       #     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Run gh
         run: |
-          gh run list --limit 1
-          gh run list --limit 1 --json name
-          gh run list --limit 1 --json url
-          gh run list --limit 1 --json workflowName
-          gh run list --limit 1 --json status
-          gh run list --limit 1 --json displayTitle
-          gh run list --limit 1 --json databaseId
-          gh run list --limit 1 --json workflowDatabaseId
+          # gh run list --limit 1
+          # gh run list --limit 1 --json name
+          # gh run list --limit 1 --json url
+          # gh run list --limit 1 --json workflowName
+          # gh run list --limit 1 --json status
+          # gh run list --limit 1 --json displayTitle
+          # gh run list --limit 1 --json databaseId
+          # gh run list --limit 1 --json workflowDatabaseId
+          echo ${{ github.event_name }}
+          echo ${{ github.job }}
+          echo ${{ github.action }}
         env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Publish Move Packages
