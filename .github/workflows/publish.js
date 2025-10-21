@@ -224,13 +224,13 @@ async function main() {
 
   console.log(process.env);
   // console.log(process.env.GITHUB_RUN_ID)
-  setup();
-  let version = await getPackageVersion();
-  writeVersion(version);
-  await write_last_commit();
-  bumpNpmVersion();
-  syncPackageJson();
-  publishPackage();
+  //   setup();
+  //   let version = await getPackageVersion();
+  //   writeVersion(version);
+  //   await write_last_commit();
+  //   bumpNpmVersion();
+  //   syncPackageJson();
+  //   publishPackage();
 }
 
 main();
