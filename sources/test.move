@@ -1,6 +1,8 @@
 module test::test{
     use aptos_framework::event;
-    use aptos_packages::test::{test3 as test5};
+    // use aptos_packages::test::{test3 as test5};
+    #[test_only]
+    use aptos_std::debug;
 
     #[event]
     struct TestEvent has drop, store {
@@ -25,7 +27,7 @@ module test::test{
     }
 
     public entry fun test3(list: vector<address>) {
-        test5(list);
+        // test5(list);
         
         event::emit(TestEvent3 {
             a: list,
@@ -34,6 +36,8 @@ module test::test{
  
     #[test]
     fun test_addition() {
-        test();
+        // test();
+        let a = 9/2;
+        debug::print(&a)
     }  
 }

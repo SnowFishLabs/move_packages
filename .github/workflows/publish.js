@@ -221,6 +221,7 @@ function runGh() {
 
 async function main() {
   // runGh();
+
   console.log(process.env);
   // console.log(process.env.GITHUB_RUN_ID)
   setup();
